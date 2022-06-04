@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+  var number = 123;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Material(
         child: Center(
           child: Container(
-            child: Text("Welcome to m first flutter app"),
+            child: Text("Welcome to prathamesh my first flutter app 1602 $number"),
           ),
         ),
       ),
