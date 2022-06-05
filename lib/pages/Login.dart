@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_myapp/pages/Home_Page.dart';
+import 'package:flutter_myapp/utils/MyRoutes.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -36,7 +36,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: <Widget>[
+            
+            // Image.asset("asset/images/login.png"),
             Container(
+               
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(40),
                 child: const Text(
@@ -87,10 +90,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   onPressed: () {
                     print(nameController.text);
                     print(passwordController.text);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => HomePage()),
+                    // );
+                    Navigator.of(context, rootNavigator: true).pushNamed(MyRoutes.HomePage);
                   },
                 )),
             Row(
