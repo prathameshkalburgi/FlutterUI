@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "687228699331",
+    "firebase_url": "https://student-lms-5740d-default-rtdb.firebaseio.com",
+    "project_id": "student-lms-5740d",
+    "storage_bucket": "student-lms-5740d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687228699331:android:b4422de7071e9e8c601876",
+        "android_client_info": {
+          "package_name": "com.example.flutter_myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "687228699331-ta09fstsapnqs14gdp6avl7fu9g1jjbp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2fCg96eEnRqx2JFAYia6Phg-U--awry4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "687228699331-ta09fstsapnqs14gdp6avl7fu9g1jjbp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
