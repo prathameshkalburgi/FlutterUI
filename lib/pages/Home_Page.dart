@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:flutter_myapp/models/catalog.dart';
-import 'package:flutter_myapp/widgets/drawer.dart';
+import 'package:flutter_myapp/widgets/drawer/custom_drawer.dart';
 import 'package:flutter_myapp/widgets/items_widget.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -27,12 +29,17 @@ class _HomePageState extends State<HomePage> {
     final decodedData = jsonDecode(catalogJson);
     var productsData = decodedData["products"];
     print(productsData);
+    CatalogModel.items = List.from(productsData)
+        .map<Item>((item) => Item.fromMap(item))
+        .toList();
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    final dummyList = List.generate(20, (index) => CatalogModel.items[0]);
+    final dummyList = CatalogModel.items;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text("Catalog App", style: TextStyle(color: Colors.black)),
       ),
@@ -47,7 +54,8 @@ class _HomePageState extends State<HomePage> {
           },
         ),
       ),
-      drawer: MyDrawer(),
+      // drawer: MyDrawer(),
+      drawer: const CustomDrawer()
     );
   }
 }

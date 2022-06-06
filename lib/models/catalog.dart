@@ -4,7 +4,7 @@ import 'dart:convert';
 
 
 class CatalogModel {
-  static final items = [
+   static var items = [
     Item(
         id: 1,
         name: "iPhone 12 Pro",
