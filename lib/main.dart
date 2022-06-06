@@ -4,6 +4,7 @@ import 'package:flutter_myapp/pages/login.dart';
 import 'package:flutter_myapp/utils/myRoutes.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_myapp/widgets/themes.dart';
 
 import 'firebase_options.dart';
 
@@ -25,12 +26,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
      
       themeMode: ThemeMode.light,
-      darkTheme: ThemeData(
-        brightness: Brightness.dark
-      ),
+      theme: MyTheme.lightTheme(context),
+      darkTheme: MyTheme.darkTheme(context),
+      debugShowCheckedModeBanner: false,
       routes: {
         "/" : ((context) => const Login()),
-        MyRoutes.HomePage : ((context) => const HomePage()),
+        MyRoutes.HomePage : ((context) =>  HomePage()),
         
       },
     );
