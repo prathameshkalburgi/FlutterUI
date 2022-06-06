@@ -12,7 +12,6 @@ class Login extends StatelessWidget {
     return MaterialApp(
       home: Builder(
         builder: (context) => Scaffold(
-          appBar: AppBar(),
           body: const MyStatefulWidget(),
         ),
       ),
