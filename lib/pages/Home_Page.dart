@@ -16,6 +16,8 @@ class _HomePageState extends State<HomePage> {
   final int days = 30;
 
   final String name = "Codepur";
+  
+  var _selectedIndex = 1;
 
   @override
   void initState() {
@@ -52,10 +54,12 @@ class _HomePageState extends State<HomePage> {
               item: dummyList[index],
             );
           },
-        ),
+        ),  
       ),
+      
       // drawer: MyDrawer(),
-      drawer: const CustomDrawer()
+      drawer: const CustomDrawer(),
+      
     );
   }
 }

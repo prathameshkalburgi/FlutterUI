@@ -35,7 +35,7 @@ class BottomUserInfo extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: Image.network(
-                          'https://t3.ftcdn.net/jpg/02/99/21/98/360_F_299219888_2E7GbJyosu0UwAzSGrpIxS0BrmnTCdo4.jpg',
+                          'https://firebasestorage.googleapis.com/v0/b/student-lms-5740d.appspot.com/o/leaveDoc%2FPrathmesh_Photo1.jpg?alt=media&token=029c7d80-814f-4430-a435-da34eaa9e2e9',
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -106,7 +106,7 @@ class BottomUserInfo extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.network(
-                        'https://t3.ftcdn.net/jpg/02/99/21/98/360_F_299219888_2E7GbJyosu0UwAzSGrpIxS0BrmnTCdo4.jpg',
+                        'https://firebasestorage.googleapis.com/v0/b/student-lms-5740d.appspot.com/o/leaveDoc%2FPrathmesh_Photo1.jpg?alt=media&token=029c7d80-814f-4430-a435-da34eaa9e2e9',
                         fit: BoxFit.cover,
                       ),
                     ),
