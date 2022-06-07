@@ -43,7 +43,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Catalog App", style: TextStyle(color: Colors.black)),
-        // backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 0, 0, 0))
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

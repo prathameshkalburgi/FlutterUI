@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_myapp/pages/Home_Page.dart';
 import 'package:flutter_myapp/utils/myRoutes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:page_transition/page_transition.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -13,8 +11,8 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Builder(
-        builder: (context) => Scaffold(
-          body: const MyStatefulWidget(),
+        builder: (context) => const Scaffold(
+          body: MyStatefulWidget(),
         ),
       ),
     );
@@ -115,17 +113,17 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       var user = userCredential.user;
                       if (user != null) {
                         // ignore: use_build_context_synchronously
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.leftToRight,
-                              child:  const HomePage(),
-                              inheritTheme: true,
-                              duration: const Duration(seconds: 1),
-                              ctx: context),
-                        );
-                        // Navigator.of(context, rootNavigator: true)
-                        //     .pushNamed(MyRoutes.HomePage);
+                        // Navigator.push(
+                        //   context,
+                        //   PageTransition(
+                        //       type: PageTransitionType.leftToRight,
+                        //       child:  const HomePage(),
+                        //       inheritTheme: true,
+                        //       duration: const Duration(seconds: 1),
+                        //       ctx: context),
+                        // );
+                        Navigator.of(context, rootNavigator: true)
+                            .pushNamed(MyRoutes.HomePage);
                         print("successfull logined");
                       }
                     } on FirebaseAuthException catch (e) {
