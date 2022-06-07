@@ -41,9 +41,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final dummyList = CatalogModel.items;
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text("Catalog App", style: TextStyle(color: Colors.black)),
+        // backgroundColor: Color.fromARGB(255, 255, 255, 255),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

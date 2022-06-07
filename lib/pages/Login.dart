@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_myapp/pages/Home_Page.dart';
 import 'package:flutter_myapp/utils/myRoutes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -38,13 +40,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             // Image.asset("asset/images/login.png"),
             Container(
                 alignment: Alignment.center,
-                padding: const EdgeInsets.all(40),
+                padding: const EdgeInsets.all(60),
                 child: const Text(
                   'Sign In',
                   style: TextStyle(
-                      color: Colors.blue,
+                      color: Color.fromARGB(255, 211, 152, 105),
                       fontWeight: FontWeight.bold,
-                      fontSize: 40),
+                      fontSize: 80),
                 )),
             Container(
               alignment: Alignment.center,
@@ -55,9 +57,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               child: TextField(
                 controller: nameController,
                 decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'User Name',
-                ),
+                    // border: OutlineInputBorder(),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromARGB(255, 211, 152, 105))),
+                    labelText: 'User Name',
+                    labelStyle: TextStyle(
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    )),
               ),
             ),
             Container(
@@ -66,23 +73,32 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 obscureText: true,
                 controller: passwordController,
                 decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
-                ),
+                    // border: OutlineInputBorder()
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromARGB(255, 211, 152, 105))),
+                    labelText: 'Password',
+                    labelStyle: TextStyle(
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    )),
               ),
             ),
             TextButton(
               onPressed: () {
                 // forgot password screen
               },
-              child: const Text(
-                'Forgot Password',
-              ),
+              child: const Text('Forgot Password',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 211, 152, 105),
+                  )),
             ),
             Container(
                 height: 50,
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          Color.fromARGB(255, 211, 152, 105))),
                   child: const Text('Login'),
                   onPressed: () async {
                     // print(nameController.text);
@@ -98,10 +114,20 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                               password: passwordController.text);
                       var user = userCredential.user;
                       if (user != null) {
-                        Navigator.of(context, rootNavigator: true)
-                            .pushNamed(MyRoutes.HomePage);
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.leftToRight,
+                              child:  const HomePage(),
+                              inheritTheme: true,
+                              duration: const Duration(seconds: 1),
+                              ctx: context),
+                        );
+                        // Navigator.of(context, rootNavigator: true)
+                        //     .pushNamed(MyRoutes.HomePage);
                         print("successfull logined");
-                      } 
+                      }
                     } on FirebaseAuthException catch (e) {
                       if (e.code == 'user-not-found') {
                         print('No user found for that email.');
@@ -109,7 +135,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                         snackBarShow(context, "No user found for that email.");
                       } else if (e.code == 'wrong-password') {
                         print('Wrong password provided for that user.');
-                        snackBarShow(context, "Wrong password provided for that user.");
+                        snackBarShow(
+                            context, "Wrong password provided for that user.");
                       }
                     }
                   },
@@ -120,8 +147,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 const Text('Does not have account?'),
                 TextButton(
                   child: const Text(
-                    'Sign in',
-                    style: TextStyle(fontSize: 20),
+                    'Sign up',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 211, 152, 105)),
                   ),
                   onPressed: () {
                     //signup screen
@@ -139,32 +168,30 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         // backgroundColor: Color.fromARGB(255, 249, 247, 247),
         behavior: SnackBarBehavior.floating,
         content: Container(
-            padding: const EdgeInsets . all (20),
+            padding: const EdgeInsets.all(20),
             height: 90,
-            decoration: const BoxDecoration (
+            decoration: const BoxDecoration(
               // color: Color(0xFFC72C41),
-                borderRadius : BorderRadius.all(Radius.circular(20)
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Oh snap!",
+                  style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
-        ),  
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-           const Text(
-              "Oh snap!",
-              style: TextStyle(fontSize: 18, color: Colors.white),
-            ),
-            Text(
-              "$message",
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        )
-      ),
+                Text(
+                  "$message",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            )),
       ),
     );
   }
@@ -173,6 +200,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        // backgroundColor: Color.fromARGB(255, 211, 152, 105),
         title: Text('Message'),
         content: Text('$message'),
         actions: [
