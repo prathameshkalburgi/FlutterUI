@@ -9,34 +9,44 @@ import 'package:flutter_myapp/widgets/themes.dart';
 
 import 'firebase_options.dart';
 
-
-void main() async {
-
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  ); 
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  
+  get _initialization async => ({
+        await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
+        ),
+      });
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     
+      home: FutureBuilder(
+        future: _initialization,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return SplashScreen();
+          }
+          return const CircularProgressIndicator();
+        },
+      ),
       themeMode: ThemeMode.light,
       theme: MyTheme.lightTheme(context),
-    
-      darkTheme: MyTheme.darkTheme(context),
+      // darkTheme: MyTheme.darkTheme(context),
       debugShowCheckedModeBanner: false,
+      // initialRoute: initScreen == 0 || initScreen == null ? "first" : "/",
       routes: {
         "/" : ((context) => SplashScreen()),
-        MyRoutes.login : ((context) =>  const Login()),
-        MyRoutes.HomePage : ((context) =>  const HomePage()),
-        
+        MyRoutes.login: ((context) => const Login()),
+        MyRoutes.HomePage: ((context) => const HomePage()),
       },
     );
   }
