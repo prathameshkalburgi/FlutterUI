@@ -1,6 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_myapp/pages/Login.dart';
+import 'package:flutter_myapp/pages/onBoardingPage.dart';
 import 'package:page_transition/page_transition.dart';
 
 void main() {
@@ -38,7 +39,7 @@ class StartState extends State<SplashScreen> {
         home: AnimatedSplashScreen(
             duration: 2000,
             splash: 'asset/images/logo_pratham.png',
-            nextScreen: Login(),
+            nextScreen: const OnBoardingPage(),
             splashTransition: SplashTransition.fadeTransition,
             // pageTransitionType: PageTransitionType.scale,
             splashIconSize: 500.00,
