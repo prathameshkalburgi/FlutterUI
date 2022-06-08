@@ -1,11 +1,13 @@
+import 'dart:io';
+
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_myapp/common.dart';
 import 'package:flutter_myapp/utils/myRoutes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
-
-  // static const String _title = 'Sample App';
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,16 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  Future<bool> hasNetwork() async {
+    try {
+      final result = await InternetAddress.lookup('example.com');
+      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+    } on SocketException catch (_) {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,15 +49,31 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           children: <Widget>[
             // Image.asset("asset/images/login.png"),
             Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(60),
-                child: const Text(
-                  'Sign In',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 211, 152, 105),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 80),
-                )),
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(10),
+              child: SizedBox(
+                width: 300.0,
+                child: TextLiquidFill(
+                  text: 'SIGN IN',
+                  waveColor: const Color.fromARGB(255, 211, 152, 105),
+                  loadDuration: const Duration(seconds: 10),
+                  waveDuration: const Duration(seconds: 6),
+                  boxBackgroundColor: const Color.fromARGB(255, 250, 250, 250),
+                  textStyle: const TextStyle(
+                    fontSize: 80.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  boxHeight: 300.0,
+                ),
+              ),
+              // const Text(
+              //   'Sign In',
+              //   style: TextStyle(
+              //       color: Color.fromARGB(255, 211, 152, 105),
+              //       fontWeight: FontWeight.bold,
+              //       fontSize: 80),
+              // )
+            ),
             Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(10),
@@ -99,43 +127,45 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                           Color.fromARGB(255, 211, 152, 105))),
                   child: const Text('Login'),
                   onPressed: () async {
-                    // print(nameController.text);
-                    // print(passwordController.text);
-
-                    // Navigator.of(context, rootNavigator: true).pushNamed(MyRoutes.HomePage);
-
-                    try {
-                      UserCredential userCredential = await FirebaseAuth
-                          .instance
-                          .signInWithEmailAndPassword(
-                              email: nameController.text,
-                              password: passwordController.text);
-                      var user = userCredential.user;
-                      if (user != null) {
-                        // ignore: use_build_context_synchronously
-                        // Navigator.push(
-                        //   context,
-                        //   PageTransition(
-                        //       type: PageTransitionType.leftToRight,
-                        //       child:  const HomePage(),
-                        //       inheritTheme: true,
-                        //       duration: const Duration(seconds: 1),
-                        //       ctx: context),
-                        // );
-                        Navigator.of(context, rootNavigator: true)
-                            .pushNamed(MyRoutes.HomePage);
-                        print("successfull logined");
+                    bool isOnline = await hasNetwork();
+                    if (isOnline) {
+                      try {
+                        print("success");
+                        UserCredential userCredential = await FirebaseAuth
+                            .instance
+                            .signInWithEmailAndPassword(
+                                email: nameController.text,
+                                password: passwordController.text);
+                        var user = userCredential.user;
+                        if (user != null) {
+                          // ignore: use_build_context_synchronously
+                          // Navigator.push(
+                          //   context,
+                          //   PageTransition(
+                          //       type: PageTransitionType.leftToRight,
+                          //       child:  const HomePage(),
+                          //       inheritTheme: true,
+                          //       duration: const Duration(seconds: 1),
+                          //       ctx: context),
+                          // );
+                          Navigator.of(context, rootNavigator: true)
+                              .pushNamed(MyRoutes.HomePage);
+                          print("successfull logined");
+                        }
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'user-not-found') {
+                          // print('No user found for that email.');
+                          // showDialogeBox(context, "No user found for that email.");
+                          snackBarShow(
+                              context, "No user found for that email.");
+                        } else if (e.code == 'wrong-password') {
+                          // print('Wrong password provided for that user.');
+                          snackBarShow(context,
+                              "Wrong password provided for that user.");
+                        }
                       }
-                    } on FirebaseAuthException catch (e) {
-                      if (e.code == 'user-not-found') {
-                        print('No user found for that email.');
-                        // showDialogeBox(context, "No user found for that email.");
-                        snackBarShow(context, "No user found for that email.");
-                      } else if (e.code == 'wrong-password') {
-                        print('Wrong password provided for that user.');
-                        snackBarShow(
-                            context, "Wrong password provided for that user.");
-                      }
+                    } else {
+                      snackBarShow(context, "Please connect to Internet");
                     }
                   },
                 )),
@@ -159,56 +189,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ],
         ));
   }
+}
 
-  void snackBarShow(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        // backgroundColor: Color.fromARGB(255, 249, 247, 247),
-        behavior: SnackBarBehavior.floating,
-        content: Container(
-            padding: const EdgeInsets.all(20),
-            height: 90,
-            decoration: const BoxDecoration(
-              // color: Color(0xFFC72C41),
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Oh snap!",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
-                Text(
-                  "$message",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            )),
-      ),
-    );
-  }
-
-  void showDialogeBox(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        // backgroundColor: Color.fromARGB(255, 211, 152, 105),
-        title: Text('Message'),
-        content: Text('$message'),
-        actions: [
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Go Back'))
-        ],
-      ),
-    );
-  }
+@override
+Widget build(BuildContext context) {
+  // TODO: implement build
+  throw UnimplementedError();
 }
